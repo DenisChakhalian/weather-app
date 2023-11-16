@@ -94,6 +94,9 @@ export default {
           ]
         },
         options: {
+          interaction: {
+            intersect: false,
+          },
           elements: {
             point: {
               radius: 4,
