@@ -146,7 +146,7 @@ body {
 }
 
 .card-no_cards {
-  height: fit-content;
+  height: fit-content !important;
 }
 
 .card-adding {
