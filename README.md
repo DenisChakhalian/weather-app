@@ -1,29 +1,17 @@
-# vue-js-weather-app
+# project_weather-app (firebase)
 
-This template should help get you started developing with Vue 3 in Vite.
+### Development was carried out until November 16 2023
 
-## Recommended IDE Setup
+site link: https://weather-app-e58c1.web.app/
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+how to open locally:
+1. clone repository
+2. open "weather-app" in your ide
+3. run "npm install"
+4. create .env file based on the .env.test template
+5. run "npm run dev" (to open site locally)
+6. run "npm run build" (to create dist folder)
+7. if you need hosting => deploy dist folder on Firebase
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+<img src="https://cdn.discordapp.com/attachments/427079543472390147/1174754047673257994/image.png">
+<img src="https://cdn.discordapp.com/attachments/427079543472390147/1174754563450998784/image.png">
