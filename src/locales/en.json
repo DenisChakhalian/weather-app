@@ -1,0 +1,48 @@
+{
+  "app": {
+    "name": "Weather app"
+  },
+  "translations": {
+    "en": "Eng",
+    "ua": "Ukr"
+  },
+  "navigation": {
+    "main": "Main",
+    "favorites": "Favorites"
+  },
+  "cards": {
+    "addSome": "Add some cards",
+    "addCard": "Add card",
+    "selectCity": "Select city",
+    "close": "Close",
+    "toFavorite": "To favorite",
+    "renove": "Remove",
+    "byDay": "By day",
+    "byWeek": "By week",
+    "temperature": "Temperature in °C",
+    "min": "Min",
+    "max": "Max",
+    "current": "Current"
+  },
+  "modal": {
+    "maxFavorites": "To add to your favorite, remove your favorite city, because the maximum is 5.",
+    "deleteSelected": "Are you sure you want to delete it?",
+    "button": {
+      "ok": "Ok",
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
+  "cities": {
+    "Kharkiv": "Kharkiv",
+    "Kyiv": "Kyiv",
+    "Poltava": "Poltava",
+    "Lviv": "Lviv",
+    "Lutsk": "Lutsk",
+    "Ternopil": "Ternopil",
+    "Odesa": "Odesa",
+    "Kherson": "Kherson",
+    "Sumy": "Sumy",
+    "Zhytomyr": "Zhytomyr"
+  }
+}
