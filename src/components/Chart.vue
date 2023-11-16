@@ -53,7 +53,11 @@ export default {
         const preperedWeather = weather.reduce(
           (acc, el, idx) => {
             const date = new Date(el.dt_txt);
-            const currentDate = [date.getDate(), date.getMonth()];
+            const month = date.getMonth() + 1;
+            const currentDate = [
+              date.getDate(), 
+              month < 10 ? '0' + month : month
+            ];
 
             if (idx === 0) {
               prevDate = [...currentDate];
