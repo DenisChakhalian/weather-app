@@ -139,7 +139,6 @@ export default {
     const isFavorites = computed(() => store.getters['addCard/isFavorites']);
     const list = computed(() => store.getters['list/get']);
 
-
     const handleChangeWeatherType = type => {
       weatherType.value = type;
     };
@@ -208,7 +207,9 @@ export default {
     handleCloseList() {
       this.store.commit('list/close');
       window.removeEventListener('click', this.handleCloseList);
-      this.search = this.$t ? this.$t(`cities.${this.card.id}`, this.locale) : '';
+      this.search = this.$t
+        ? this.$t(`cities.${this.card.id}`, this.locale)
+        : '';
     },
     async handleChangeCity(city, id) {
       this.store.commit('selected/update', {

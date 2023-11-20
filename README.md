@@ -42,5 +42,5 @@ npm run build
 
 7. if you need hosting => deploy dist folder on Firebase
 
-<img src="https://cdn.discordapp.com/attachments/427079543472390147/1174754047673257994/image.png">
-<img src="https://cdn.discordapp.com/attachments/427079543472390147/1174754563450998784/image.png">
+<img src="https://cdn.discordapp.com/attachments/427079543472390147/1176079079712239636/image.png">
+<img src="https://cdn.discordapp.com/attachments/427079543472390147/1176079630189465670/image.png">
