@@ -16,13 +16,15 @@
     "selectCity": "Select city",
     "close": "Close",
     "toFavorite": "To favorite",
-    "renove": "Remove",
+    "removeFavorite": "Remove from favorite",
+    "remove": "Remove",
     "byDay": "By day",
     "byWeek": "By week",
     "temperature": "Temperature in °C",
     "min": "Min",
     "max": "Max",
-    "current": "Current"
+    "current": "Current",
+    "cityNotFound": "Not found"
   },
   "modal": {
     "maxFavorites": "To add to your favorite, remove your favorite city, because the maximum is 5.",

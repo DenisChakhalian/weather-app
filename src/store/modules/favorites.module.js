@@ -1,5 +1,3 @@
-import cities from '../../constants/cities';
-
 const KEY = 'favorites';
 
 export default {
@@ -10,8 +8,7 @@ export default {
     if (!favorites) {
       favorites = [
         {
-          id: 'Kharkiv',
-          name: 'Kharkiv'
+          id: 'Kharkiv'
         }
       ];
     }
@@ -46,10 +43,6 @@ export default {
   getters: {
     get(state) {
       return state.favorites;
-    },
-    allowedCitiesId(state) {
-      const ids = state.favorites.map(({ id }) => id);
-      return cities.map(({ id }) => id).filter(id => !ids.includes(id));
     }
   }
 };

@@ -1,6 +1,12 @@
 <template>
-  <div class="modal">
-    <div class="modal__block">
+  <div
+    class="modal"
+    @click="handleCloseModal()"
+  >
+    <div
+      class="modal__block"
+      @click.stop=""
+    >
       <div class="modal__content">
         <p
           v-t="{
@@ -51,17 +57,39 @@ export default {
     const store = useStore();
     const locale = computed(() => store.getters['locale/get']);
 
+    document.documentElement.style.overflow = 'hidden';
+
     return {
       store,
       locale
     };
   },
+  mounted() {
+    window.addEventListener('keyup', this.onEscCloseModal);
+    window.addEventListener('keyup', this.onEnterSubmitModal);
+  },
+  unmounted() {
+    window.removeEventListener('keyup', this.onEscCloseModal);
+    window.removeEventListener('keyup', this.onEnterSubmitModal);
+  },
   methods: {
+    onEscCloseModal(event) {
+      if (event.key === 'Escape') {
+        this.handleCloseModal();
+      }
+    },
+    onEnterSubmitModal(event) {
+      if (event.key === 'Enter') {
+        this.handleDelete();
+      }
+    },
     handleDelete() {
       this.store.commit('selected/remove', this.modal.cardId);
+      document.documentElement.style.overflow = 'auto';
       this.store.commit('modal/close');
     },
     handleCloseModal() {
+      document.documentElement.style.overflow = 'auto';
       this.store.commit('modal/close');
     }
   }

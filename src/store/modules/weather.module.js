@@ -52,9 +52,6 @@ export default {
   getters: {
     get(state) {
       return state.weather;
-    },
-    isFavorites() {
-      return router.currentRoute.value.path === '/favorites';
     }
   }
 };

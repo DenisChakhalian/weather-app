@@ -1,36 +1,46 @@
 <template>
   <div class="card card-adding">
     <div class="card__header">
-      <select
-        class="select"
-        name="Cities"
-        autocomplete="on"
-        @change="handleChangeCity($event)"
-      >
-        <option
-          v-t="{ path: 'cards.selectCity', locale }"
-          class="option"
-          value="0"
-          selected
-          disabled
-        />
+      <div @click.stop="">
+        <div class="select">
+          <input
+            v-model="search"
+            :placeholder="$t('cards.selectCity', locale)"
+            @click="handleOpenList()"
+            @input="handleOpenList()"
+          >
+        </div>
 
-        <template
-          v-for="city in cities"
-          :key="city.id"
+        <div
+          ref="listRef"
+          class="options"
+          :class="{
+            'options-closed': list?.id !== 'adding',
+            'options-reversed': isReverse
+          }"
         >
-          <option
-            v-t="{ path: `cities.${city.name}`, locale }"
-            class="option"
-            :value="city.id"
-            :disabled="!allowedCitiesId.includes(city.id)"
+          <template
+            v-for="city in filterResult"
+            :key="city.id"
+          >
+            <div
+              v-t="{ path: `cities.${city.id}`, locale }"
+              class="option"
+              :class="{ 'option-disebled': !allowedCitiesId.includes(city.id) }"
+              @click="handleChangeCity(city.id)"
+            />
+          </template>
+          <div
+            v-if="!filterResult.length"
+            v-t="{ path: 'cards.cityNotFound', locale }"
+            class="option option-disebled"
           />
-        </template>
-      </select>
+        </div>
+      </div>
 
       <button
         class="button"
-        title="Close"
+        :title="$t('cards.close', locale)"
         @click="handleCloseAdding()"
       >
         ❌
@@ -40,8 +50,7 @@
 </template>
 
 <script>
-import cities from '../constants/cities';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -49,36 +58,85 @@ export default {
     allowedCitiesId: {
       type: Array,
       default: () => []
+    },
+    cities: {
+      type: Array
     }
   },
   setup() {
+    const listRef = ref(null);
     const store = useStore();
     const locale = computed(() => store.getters['locale/get']);
-    const isAdding = computed(() => store.getters['addCard/get']);
+    const list = computed(() => store.getters['list/get']);
 
     return {
-      cities,
       store,
-      isAdding,
-      locale
+      locale,
+      list,
+      listRef
     };
+  },
+  data() {
+    return {
+      isOpen: false,
+      filteredCities: [],
+      search: '',
+      isReverse: false
+    };
+  },
+  computed: {
+    filterResult() {
+      this.filteredCities = this.cities.filter(city => {
+        return (
+          city.name.toLowerCase().indexOf(this.search.toLowerCase().trim()) > -1
+        );
+      });
+
+      if (this.isReverse) {
+        this.filteredCities.reverse();
+      }
+
+      return this.filteredCities;
+    }
   },
   mounted() {
     window.scrollTo(0, document.body.scrollHeight + 500);
   },
+  updated() {
+    if (
+      this.list &&
+      this.list.isOpen &&
+      this.listRef.getBoundingClientRect().bottom >
+        document.documentElement.clientHeight
+    ) {
+      this.isReverse = true;
+    }
+
+    if (this.isReverse && !this.list) {
+      this.isReverse = false;
+      this.filteredCities.reverse();
+    }
+  },
   methods: {
-    async handleChangeCity(event) {
+    async handleChangeCity(id) {
       this.store.commit('selected/add', {
-        id: event.target.value,
-        name: event.target.value
+        id
       });
       this.store.commit('addCard/close');
-      await this.store.dispatch('weather/load', [
-        { id: event.target.value, name: event.target.value }
-      ]);
+      await this.store.dispatch('weather/load', [{ id }]);
     },
     handleCloseAdding() {
       this.store.commit('addCard/close');
+    },
+    handleOpenList() {
+      if (this.list?.id !== 'adding') {
+        this.store.commit('list/open', 'adding');
+        window.addEventListener('click', this.handleCloseList);
+      }
+    },
+    handleCloseList() {
+      this.store.commit('list/close');
+      window.removeEventListener('click', this.handleCloseList);
     }
   }
 };

@@ -8,16 +8,18 @@
       :key="card.id"
     >
       <Card
-        :card="card"
+        :card="{ id: card.id, name: $t(`cities.${card.id}`, locale) }"
         :is-favorite="favoritesIds.includes(card.id)"
         :allowed-cities-id="allowedCitiesId"
         :weather="weather[card.id]"
+        :cities="cities"
       />
     </template>
 
     <AddingCard
       v-if="isAdding"
       :allowed-cities-id="allowedCitiesId"
+      :cities="cities"
     />
     <div
       v-if="!isCards && !isAdding"
@@ -50,9 +52,6 @@ export default {
     const selected = computed(() => store.getters['selected/get']);
     const favoritesIds = computed(() => favorites.value.map(({ id }) => id));
     const isAdding = computed(() => store.getters['addCard/get']);
-    const allowedCitiesId = computed(
-      () => store.getters[`${props.type}/allowedCitiesId`]
-    );
     const loading = ref(true);
     const isCards = computed(() =>
       props.type === 'favorites'
@@ -62,14 +61,22 @@ export default {
 
     onMounted(async () => {
       loading.value = true;
+
       await store.dispatch('weather/load', [
         ...favorites.value,
         ...selected.value
       ]);
+
+      await store.dispatch('cities/load', locale.value);
+
       loading.value = false;
     });
 
     const weather = computed(() => store.getters['weather/get']);
+    const cities = computed(() => store.getters['cities/get']);
+    const allowedCitiesId = computed(
+      () => store.getters['selected/allowedCitiesId']
+    );
 
     return {
       favoritesIds,
@@ -81,12 +88,23 @@ export default {
       favorites,
       selected,
       isCards,
-      locale
+      locale,
+      cities
+    };
+  },
+  data() {
+    return {
+      prevLocale: this.locale
     };
   },
   updated() {
     if (this.type === 'favorites') {
       this.store.commit('addCard/close');
+    }
+
+    if (this.prevLocale !== this.locale) {
+      this.store.dispatch('cities/load', this.locale);
+      this.prevLocale = this.locale;
     }
   }
 };

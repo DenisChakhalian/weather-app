@@ -21,19 +21,25 @@ Weather App is a user-friendly website offering real-time and weekly weather upd
 2. Open "weather-app" in your ide
 3. Open terminal in the project
 4. Set up project and install necessary packages:
-```bash 
+
+```bash
 npm install
 ```
+
 5. Create .env file based on the .env.test template
-4. Run these commands in terminal:
-```bash 
+6. Run these commands in terminal:
+
+```bash
 npm run dev
 ```
+
 5. Open application in your browser
 6. To create dist folder run build:
-```bash 
+
+```bash
 npm run build
 ```
+
 7. if you need hosting => deploy dist folder on Firebase
 
 <img src="https://cdn.discordapp.com/attachments/427079543472390147/1174754047673257994/image.png">

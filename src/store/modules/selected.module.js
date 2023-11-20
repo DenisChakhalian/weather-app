@@ -1,4 +1,4 @@
-import cities from '../../constants/cities';
+import { useStore } from 'vuex';
 
 const KEY = 'selected';
 
@@ -10,8 +10,7 @@ export default {
     if (!selected) {
       selected = [
         {
-          id: 'Kharkiv',
-          name: 'Kharkiv'
+          id: 'Kharkiv'
         }
       ];
     }
@@ -46,7 +45,11 @@ export default {
       return state.selected;
     },
     allowedCitiesId(state) {
+      const store = useStore();
+
       const ids = state.selected.map(({ id }) => id);
+      const cities = store.getters['cities/get'];
+
       return cities.map(({ id }) => id).filter(id => !ids.includes(id));
     }
   }

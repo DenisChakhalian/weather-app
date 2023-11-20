@@ -4,8 +4,6 @@
 
 <script>
 import Chart from 'chart.js/auto';
-import { computed } from 'vue';
-import { useStore } from 'vuex';
 
 export default {
   props: {
@@ -15,15 +13,20 @@ export default {
     },
     weather: {
       type: Object
+    },
+    locale: {
+      type: String,
+      default: 'en'
     }
   },
-  setup() {
-    const store = useStore();
-    const locale = computed(() => store.getters['locale/get']);
-
-    return {
-      locale
-    };
+  computed: {
+    labelsByDay() {
+      return [
+        this.$t('cards.min', this.locale),
+        this.$t('cards.current', this.locale),
+        this.$t('cards.max', this.locale)
+      ];
+    }
   },
   mounted() {
     Chart.defaults.color = '#FFF';
@@ -39,7 +42,7 @@ export default {
       let labels, data;
 
       if (weather.temp) {
-        labels = ['MIN', 'CURRENT', 'MAX'];
+        labels = this.labelsByDay;
         data = [
           Math.round(weather.temp_min),
           Math.round(weather.temp),
@@ -55,7 +58,7 @@ export default {
             const date = new Date(el.dt_txt);
             const month = date.getMonth() + 1;
             const currentDate = [
-              date.getDate(), 
+              date.getDate(),
               month < 10 ? '0' + month : month
             ];
 
@@ -89,7 +92,7 @@ export default {
           labels,
           datasets: [
             {
-              label: 'Temperature in °C',
+              label: this.$t('cards.temperature', this.locale),
               data,
               borderWidth: 1,
               borderColor: '#FF6384',
@@ -99,7 +102,7 @@ export default {
         },
         options: {
           interaction: {
-            intersect: false,
+            intersect: false
           },
           elements: {
             point: {
@@ -111,7 +114,8 @@ export default {
           scales: {
             y: {
               beginAtZero: true,
-              suggestedMax: Math.max(...data) + 1
+              suggestedMax: Math.max(...data) + 1,
+              suggestedMin: Math.max(...data) - 1
             }
           }
         }

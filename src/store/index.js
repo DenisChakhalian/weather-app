@@ -5,6 +5,8 @@ import addCard from './modules/addCard.module';
 import weather from './modules/weather.module';
 import modal from './modules/modal.module';
 import locale from './modules/locale.module';
+import list from './modules/list.module';
+import cities from './modules/cities.module';
 
 export default createStore({
   modules: {
@@ -13,6 +15,8 @@ export default createStore({
     addCard,
     weather,
     modal,
-    locale
+    locale,
+    list,
+    cities
   }
 });

@@ -7,7 +7,7 @@
     </div>
     <router-view />
   </div>
-  <AddCard />
+  <AddCard v-if="!isAdding" />
   <Modal
     v-if="modal.isVisible"
     :modal="modal"
@@ -25,4 +25,5 @@ import Locale from './components/Locale.vue';
 
 const store = useStore();
 const modal = computed(() => store.getters['modal/get']);
+const isAdding = computed(() => store.getters['addCard/get']);
 </script>
